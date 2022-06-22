@@ -12,7 +12,10 @@ interface AllMdxQueryScheme {
 		allMdx: {
 			edges: [
 				{
-					node: { slug: string };
+					node: {
+						id: string;
+						fileAbsolutePath: string;
+					};
 				}
 			];
 		};
@@ -20,11 +23,9 @@ interface AllMdxQueryScheme {
 }
 
 export default class MdxPageNodeAdapter implements CreateMdxGatsbyNode {
-	private pageUrlPrefix: string;
 	private pageTemplatePath: string;
 
-	constructor(pageUrlPrefix: string, pageTemplatePath: string) {
-		this.pageUrlPrefix = pageUrlPrefix;
+	constructor(pageTemplatePath: string) {
 		this.pageTemplatePath = pageTemplatePath;
 	}
 
@@ -36,7 +37,8 @@ export default class MdxPageNodeAdapter implements CreateMdxGatsbyNode {
 				allMdx {
 					edges {
 						node {
-							slug
+							id
+							fileAbsolutePath
 						}
 					}
 				}
@@ -44,13 +46,14 @@ export default class MdxPageNodeAdapter implements CreateMdxGatsbyNode {
 		`);
 
 		result.data?.allMdx.edges.forEach(({ node }) => {
-			const url = path.join(this.pageUrlPrefix, node.slug);
+			const { id, fileAbsolutePath } = node;
+			const [_, fileRelativePath] = fileAbsolutePath.split("src");
 
 			createPage({
-				path: url,
+				path: fileRelativePath,
 				component: path.resolve(this.pageTemplatePath),
 				context: {
-					slug: url,
+					id,
 				},
 			});
 		});
