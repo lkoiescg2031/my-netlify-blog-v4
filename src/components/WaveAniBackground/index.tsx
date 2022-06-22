@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import WaveGroup from "./WaveGroup";
 
 // FIXME need to change style engine to styled-components
-import { StyleSheet, css } from "aphrodite";
+// import { StyleSheet, css } from "aphrodite";
 
 import { createGradient } from "../../utils/canvas";
 
@@ -31,16 +31,16 @@ const defaultWaveColors = [
 	}),
 ];
 
-const WaveAniBackgroundStyle = StyleSheet.create({
-	canvas: {
-		width: "100%",
-		height: "100%",
-		position: "absolute",
-		top: 0,
-		left: 0,
-		zIndex: -9999,
-	},
-});
+// const WaveAniBackgroundStyle = StyleSheet.create({
+// 	canvas: {
+// 		width: "100%",
+// 		height: "100%",
+// 		position: "absolute",
+// 		top: 0,
+// 		left: 0,
+// 		zIndex: -9999,
+// 	},
+// });
 
 // FIXME change field to state
 // FIXME change to func components
@@ -148,7 +148,7 @@ export default class WaveAniBackground extends PureComponent<WaveAniBackgroundPr
 		return (
 			<canvas
 				ref={this.canvasRef}
-				className={css(WaveAniBackgroundStyle.canvas)}
+				// className={css(WaveAniBackgroundStyle.canvas)}
 			/>
 		);
 	}

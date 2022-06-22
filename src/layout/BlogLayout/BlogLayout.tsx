@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import CssBaseline from "@mui/material/CssBaseline";
-import { withStyles } from "@mui/material";
+// import { withStyles } from "@mui/material";
 import globalTheme from "../../styles/theme";
 
 import WaveBackgroundAni from "../../components/WaveAniBackground";
@@ -87,7 +87,8 @@ class BlogLayout extends React.PureComponent<BlogLayoutProps, BlogLayoutState> {
 	}
 
 	render() {
-		const { classes, title, profile, categories, tags, children } = this.props;
+		// const { classes, title, profile, categories, tags, children } = this.props;
+		const { title, profile, categories, tags, children } = this.props;
 		const { isOpenDrawer } = this.state;
 
 		return (
@@ -102,12 +103,18 @@ class BlogLayout extends React.PureComponent<BlogLayoutProps, BlogLayoutState> {
 				}}
 			>
 				<ThemeProvider theme={globalTheme}>
-					<div className={classes.root}>
+					<div
+					// className={classes.root}
+					>
 						<CssBaseline />
 						<AppBar />
 						<Drawer />
-						<main className={classes.content}>
-							<div className={classes.toolbar} />
+						<main
+						// className={classes.content}
+						>
+							<div
+							// className={classes.toolbar}
+							/>
 							{children}
 						</main>
 					</div>
@@ -119,21 +126,23 @@ class BlogLayout extends React.PureComponent<BlogLayoutProps, BlogLayoutState> {
 }
 
 // FIXME mui withStyle 함수가 사라졌는 지 확인
-export default withStyles((theme) => ({
-	root: {
-		display: "flex",
-		position: "relative",
-	},
-	background: {
-		width: "100%",
-		height: "100%",
-		backgroundColor: globalTheme.palette.primary.main,
-		zIndex: -999,
-		position: "absolute",
-	},
-	toolbar: theme.mixins.toolbar,
-	content: {
-		width: "100%",
-		padding: theme.spacing(2),
-	},
-}))(BlogLayout);
+// export default withStyles((theme) => ({
+// 	root: {
+// 		display: "flex",
+// 		position: "relative",
+// 	},
+// 	background: {
+// 		width: "100%",
+// 		height: "100%",
+// 		backgroundColor: globalTheme.palette.primary.main,
+// 		zIndex: -999,
+// 		position: "absolute",
+// 	},
+// 	toolbar: theme.mixins.toolbar,
+// 	content: {
+// 		width: "100%",
+// 		padding: theme.spacing(2),
+// 	},
+// }))(BlogLayout);
+
+export default BlogLayout;

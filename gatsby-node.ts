@@ -6,7 +6,7 @@ const mdxPageNodeAdapter = new MdxPageNodeAdapter("/posts", "./src/templates/Pos
 
 const gatsbyNode: GatsbyNode = {
 	async createPages(args) {
-		await mdxPageNodeAdapter.createPages(args);
+		// await mdxPageNodeAdapter.createPages(args);
 	},
 };
 
