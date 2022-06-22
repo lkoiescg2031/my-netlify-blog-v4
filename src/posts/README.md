@@ -4,7 +4,7 @@ title: "Template Post"
 date: "1900-01-01"
 category: "템플릿"
 tags: ["sample", "template", ]
-private: false
+private: true
 log: [
   {date : "2019-10-23", msg: "최조 작성"},
   ]

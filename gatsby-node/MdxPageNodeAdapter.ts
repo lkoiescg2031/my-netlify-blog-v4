@@ -33,8 +33,8 @@ export default class MdxPageNodeAdapter implements CreateMdxGatsbyNode {
 		const { createPage } = actions;
 
 		const result: AllMdxQueryScheme = await graphql(`
-			query MyQuery {
-				allMdx {
+			query allPublicPosts {
+				allMdx(filter: { frontmatter: { private: { eq: false } } }) {
 					edges {
 						node {
 							id
