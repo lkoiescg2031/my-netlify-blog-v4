@@ -12,7 +12,7 @@ interface Profile {
 	linkedIn?: string;
 }
 
-interface BlogLayoutContext {
+interface BlogLayoutContextProps {
 	title: string;
 	isOpenDrawer: boolean;
 	toggleDrawer: MouseEventHandler<HTMLButtonElement>;
@@ -21,10 +21,13 @@ interface BlogLayoutContext {
 	tags?: [string];
 }
 
-const { Provider, Consumer } = React.createContext<BlogLayoutContext>({
+const BlogLayoutContext = React.createContext<BlogLayoutContextProps>({
 	title: "",
 	isOpenDrawer: false,
 	toggleDrawer: () => {},
 });
 
-export { Provider, Consumer };
+export const BlogLayoutProvider = BlogLayoutContext.Provider;
+export const BlogLayoutConsumer = BlogLayoutContext.Consumer;
+
+export default BlogLayoutContext;

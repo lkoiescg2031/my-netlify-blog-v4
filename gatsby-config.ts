@@ -4,8 +4,8 @@ const config: GatsbyConfig = {
 	siteMetadata: {
 		title: `Backend develop log`,
 		siteUrl: `http://lkoiescg2031.netlify.com`,
-		description:
-			"웹개발, 백엔드, 프론트엔드 상관없이 관심 있는 분야라면 뭐든 다뤄보는 블로그",
+		description: "",
+		// "웹개발, 백엔드, 프론트엔드 상관없이 관심 있는 분야라면 뭐든 다뤄보는 블로그",
 		author: "Taehong Kim",
 		user: {
 			name: "Taehong Kim",
@@ -27,17 +27,17 @@ const config: GatsbyConfig = {
 	graphqlTypegen: true,
 	plugins: [
 		"gatsby-plugin-material-ui",
-		// {
-		// 	resolve: `gatsby-plugin-emotion`,
-		// 	options: {
-		// 		// Accepts the following options, all of which are defined by `@emotion/babel-plugin` plugin.
-		// 		// The values for each key in this example are the defaults the plugin uses.
-		// 		sourceMap: true,
-		// 		autoLabel: "dev-only",
-		// 		labelFormat: `[local]`,
-		// 		cssPropOptimization: true,
-		// 	},
-		// },
+		{
+			resolve: `gatsby-plugin-emotion`,
+			options: {
+				// Accepts the following options, all of which are defined by `@emotion/babel-plugin` plugin.
+				// The values for each key in this example are the defaults the plugin uses.
+				sourceMap: true,
+				autoLabel: "dev-only",
+				labelFormat: `[local]`,
+				cssPropOptimization: true,
+			},
+		},
 		"gatsby-plugin-netlify-cms",
 		"gatsby-plugin-image",
 		"gatsby-plugin-react-helmet",

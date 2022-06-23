@@ -15,18 +15,6 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 // import Category from "../components/Category";
 // import Tags from "../components/Tags";
 
-// FIXME styled-component 시스탬 변경
-// const usePostStyle = makeStyles((theme: Theme) => ({
-// 	cardRoot: {
-// 		margin: `0 ${theme.spacing(10)}px`,
-// 	},
-// 	titleDivider: {
-// 		marginTop: theme.spacing(0.5),
-// 		marginBottom: theme.spacing(0.5),
-// 		borderTop: "3px double rgba(0, 0, 0, 0.12)",
-// 	},
-// }));
-
 interface PostScheme {
 	mdx: {
 		frontmatter: {
@@ -43,6 +31,18 @@ interface PostProps {
 	data: PostScheme;
 }
 
+// FIXME styled-component 시스탬 변경
+// const usePostStyle = makeStyles((theme: Theme) => ({
+// 	cardRoot: {
+// 		margin: `0 ${theme.spacing(10)}px`,
+// 	},
+// 	titleDivider: {
+// 		marginTop: theme.spacing(0.5),
+// 		marginBottom: theme.spacing(0.5),
+// 		borderTop: "3px double rgba(0, 0, 0, 0.12)",
+// 	},
+// }));
+
 const Post: React.FC<PostProps> = ({ data }) => {
 	// const classes = usePostStyle();
 	const post = data.mdx;
@@ -52,8 +52,8 @@ const Post: React.FC<PostProps> = ({ data }) => {
 	// FIX ceo 요소 추가
 	return (
 		<BlogLayout>
-			{/* TODO Category 살리기
-			<Category medium pathes={pathes} /> */}
+			{/* TODO Category 살리기 */}
+			{/* <Category medium pathes={pathes} /> */}
 			<Card
 				elevation={4}
 				//classes={{ root: classes.cardRoot }}
@@ -67,9 +67,8 @@ const Post: React.FC<PostProps> = ({ data }) => {
 					<Divider
 					// classes={{ root: classes.titleDivider }}
 					/>
-					{/* TODO Tag 살리기
-					<Tags align="right" tags={post.frontmatter.tags} /> */}
-					{/* <div dangerouslySetInnerHTML={{ __html: post.html }} /> */}
+					{/* TODO Tag 살리기 */}
+					{/* <Tags align="right" tags={post.frontmatter.tags} /> */}
 					<MDXRenderer>{post.body}</MDXRenderer>
 				</CardContent>
 			</Card>
@@ -77,21 +76,6 @@ const Post: React.FC<PostProps> = ({ data }) => {
 	);
 };
 
-// export const query = graphql`
-// 	query ($id: String!) {
-// 		markdownRemark(fields: { slug: { eq: $slug } }) {
-// 			frontmatter {
-// 				title
-// 				tags
-// 				date
-// 			}
-// 			fields {
-// 				slug
-// 			}
-// 			html
-// 		}
-// 	}
-// `;
 export const query = graphql`
 	query getMdx($id: String!) {
 		mdx(id: { eq: $id }) {
@@ -106,4 +90,5 @@ export const query = graphql`
 		}
 	}
 `;
+
 export default Post;

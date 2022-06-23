@@ -3,7 +3,7 @@ import { StaticQuery, graphql } from "gatsby";
 
 import BlogLayout from "./BlogLayout";
 
-export default (props: any) => {
+const Container: React.FC<any> = (props: any) => {
 	const query = graphql`
 		{
 			site {
@@ -44,3 +44,5 @@ export default (props: any) => {
 		/>
 	);
 };
+
+export default Container;

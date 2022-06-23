@@ -1,24 +1,27 @@
 import React, { MouseEvent } from "react";
 import PropTypes from "prop-types";
 
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 // import { withStyles } from "@mui/material";
+
+import BlogLayoutAppbar from "./BlogLayoutAppBar";
+import BlogLayoutDrawer from "./BlogLayoutDrawer";
+
 import globalTheme from "../../styles/theme";
 
 import WaveBackgroundAni from "../../components/WaveAniBackground";
 
-import { Provider } from "./context";
-import AppBar from "./AppBar";
-import Drawer from "./Drawer";
+import { BlogLayoutProvider } from "./BlogLayoutContext";
 
 interface BlogLayoutProps {
 	title: string;
 	profile: object;
 	categories?: object;
 	tags?: [string];
-	children?: JSX.Element;
 	classes: { root: any; content: any; toolbar: any };
+	children: React.ReactElement;
+	window?: () => Window;
 }
 interface BlogLayoutState {
 	isOpenDrawer: boolean;
@@ -92,7 +95,7 @@ class BlogLayout extends React.PureComponent<BlogLayoutProps, BlogLayoutState> {
 		const { isOpenDrawer } = this.state;
 
 		return (
-			<Provider
+			<BlogLayoutProvider
 				value={{
 					title: title,
 					// categories,
@@ -107,8 +110,8 @@ class BlogLayout extends React.PureComponent<BlogLayoutProps, BlogLayoutState> {
 					// className={classes.root}
 					>
 						<CssBaseline />
-						<AppBar />
-						<Drawer />
+						<BlogLayoutAppbar {...this.props} />
+						<BlogLayoutDrawer />
 						<main
 						// className={classes.content}
 						>
@@ -120,7 +123,7 @@ class BlogLayout extends React.PureComponent<BlogLayoutProps, BlogLayoutState> {
 					</div>
 					<WaveBackgroundAni ref={this.backgroundRef} />
 				</ThemeProvider>
-			</Provider>
+			</BlogLayoutProvider>
 		);
 	}
 }
