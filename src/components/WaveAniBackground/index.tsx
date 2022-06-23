@@ -1,9 +1,9 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import WaveGroup from "./WaveGroup";
 
-// FIXME need to change style engine to styled-components
-// import { StyleSheet, css } from "aphrodite";
+import styled from "@emotion/styled";
+
+import WaveGroup from "./WaveGroup";
 
 import { createGradient } from "../../utils/canvas";
 
@@ -31,16 +31,14 @@ const defaultWaveColors = [
 	}),
 ];
 
-// const WaveAniBackgroundStyle = StyleSheet.create({
-// 	canvas: {
-// 		width: "100%",
-// 		height: "100%",
-// 		position: "absolute",
-// 		top: 0,
-// 		left: 0,
-// 		zIndex: -9999,
-// 	},
-// });
+const WaveAniStyledCavans = styled.canvas`
+	width: "100%";
+	height: "100%";
+	position: "absolute";
+	top: 0;
+	left: 0;
+	zindex: -9999;
+`;
 
 // FIXME change field to state
 // FIXME change to func components
@@ -145,11 +143,6 @@ export default class WaveAniBackground extends PureComponent<WaveAniBackgroundPr
 	}
 
 	render() {
-		return (
-			<canvas
-				ref={this.canvasRef}
-				// className={css(WaveAniBackgroundStyle.canvas)}
-			/>
-		);
+		return <WaveAniStyledCavans ref={this.canvasRef} />;
 	}
 }
