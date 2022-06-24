@@ -4,8 +4,8 @@ const config: GatsbyConfig = {
 	siteMetadata: {
 		title: `Backend develop log`,
 		siteUrl: `http://lkoiescg2031.netlify.com`,
-		description: "",
-		// "웹개발, 백엔드, 프론트엔드 상관없이 관심 있는 분야라면 뭐든 다뤄보는 블로그",
+		description:
+			"웹개발, 백엔드, 프론트엔드 상관없이 관심 있는 분야라면 뭐든 다뤄보는 블로그",
 		author: "Taehong Kim",
 		user: {
 			name: "Taehong Kim",
