@@ -2,8 +2,8 @@ import React, { MouseEvent } from "react";
 import PropTypes from "prop-types";
 
 import { ThemeProvider } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-// import { withStyles } from "@mui/material";
 
 import BlogLayoutAppbar from "./BlogLayoutAppBar";
 import BlogLayoutDrawer from "./BlogLayoutDrawer";
@@ -13,6 +13,24 @@ import globalTheme from "../../styles/theme";
 import WaveBackgroundAni from "../../components/WaveAniBackground";
 
 import { BlogLayoutProvider } from "./BlogLayoutContext";
+
+const StyledRootDiv = styled((props: { children: React.ReactElement[] }) => (
+	<div {...props} />
+))(({ theme }) => ({
+	display: "flex",
+	position: "relative",
+}));
+
+const StyledMain = styled((props: { children: React.ReactElement[] }) => (
+	<main {...props} />
+))(({ theme }) => ({
+	width: "100%",
+	padding: theme.spacing(2),
+}));
+
+const StyledToolbar = styled((props) => <div {...props} />)(({ theme }) => ({
+	...theme.mixins.toolbar,
+}));
 
 interface BlogLayoutProps {
 	title: string;
@@ -90,7 +108,6 @@ class BlogLayout extends React.PureComponent<BlogLayoutProps, BlogLayoutState> {
 	}
 
 	render() {
-		// const { classes, title, profile, categories, tags, children } = this.props;
 		const { title, profile, categories, tags, children } = this.props;
 		const { isOpenDrawer } = this.state;
 
@@ -98,54 +115,28 @@ class BlogLayout extends React.PureComponent<BlogLayoutProps, BlogLayoutState> {
 			<BlogLayoutProvider
 				value={{
 					title: title,
-					// categories,
 					isOpenDrawer,
 					toggleDrawer: this.toggleDrawer,
 					profile,
+					// categories,
 					// tags,
 				}}
 			>
 				<ThemeProvider theme={globalTheme}>
-					<div
-					// className={classes.root}
-					>
+					<StyledRootDiv>
 						<CssBaseline />
 						<BlogLayoutAppbar {...this.props} />
 						<BlogLayoutDrawer />
-						<main
-						// className={classes.content}
-						>
-							<div
-							// className={classes.toolbar}
-							/>
+						<StyledMain>
+							<StyledToolbar />
 							{children}
-						</main>
-					</div>
+						</StyledMain>
+					</StyledRootDiv>
 					<WaveBackgroundAni ref={this.backgroundRef} />
 				</ThemeProvider>
 			</BlogLayoutProvider>
 		);
 	}
 }
-
-// FIXME mui withStyle 함수가 사라졌는 지 확인
-// export default withStyles((theme) => ({
-// 	root: {
-// 		display: "flex",
-// 		position: "relative",
-// 	},
-// 	background: {
-// 		width: "100%",
-// 		height: "100%",
-// 		backgroundColor: globalTheme.palette.primary.main,
-// 		zIndex: -999,
-// 		position: "absolute",
-// 	},
-// 	toolbar: theme.mixins.toolbar,
-// 	content: {
-// 		width: "100%",
-// 		padding: theme.spacing(2),
-// 	},
-// }))(BlogLayout);
 
 export default BlogLayout;
