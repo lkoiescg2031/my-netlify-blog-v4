@@ -31,17 +31,18 @@ const defaultWaveColors = [
 	}),
 ];
 
-const WaveAniStyledCavans = styled.canvas`
-	width: "100%";
-	height: "100%";
-	position: "absolute";
-	top: 0;
-	left: 0;
-	zindex: -9999;
-`;
+const WaveAniStyledCavans = styled.canvas({
+	width: "100%",
+	height: "100%",
+	position: "absolute",
+	top: 0,
+	left: 0,
+	zIndex: -9999,
+});
 
 // FIXME change field to state
 // FIXME change to func components
+// FIXME fix resolution
 export default class WaveAniBackground extends PureComponent<WaveAniBackgroundProps> {
 	private canvasRef: React.RefObject<HTMLCanvasElement>;
 	private canvas!: HTMLCanvasElement;
