@@ -98,9 +98,17 @@ const StyledContactWrapper = styled(
 	marginTop: theme.spacing(1),
 }));
 
-const StyledSNSIconButton = styled(IconButton)(({ theme }) => ({
+const StyledSNSIconButton = styled(
+	(props: { href: string; children: React.ReactElement }) => (
+		<IconButton {...props} />
+	)
+)(({ theme }) => ({
 	width: theme.spacing(4),
 	height: theme.spacing(4),
+}));
+
+const StyledDescTypography = styled(Typography)(({ theme }) => ({
+	margin: theme.spacing(1),
 }));
 
 const BlogLayoutDrawer: React.FC = () => {
@@ -130,10 +138,9 @@ const BlogLayoutDrawer: React.FC = () => {
 							<Typography variant="h6" color="inherit">
 								{profile.name}
 							</Typography>
-							{/** FIXME 상세 정보 마진 설정 */}
-							<Typography variant="body2" color="inherit">
+							<StyledDescTypography variant="body2" color="inherit">
 								{profile.desc}
-							</Typography>
+							</StyledDescTypography>
 							<StyledContactWrapper>
 								{profile.email && (
 									<StyledSNSIconButton href={`mailto:${profile.email}`}>
