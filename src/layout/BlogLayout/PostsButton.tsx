@@ -1,25 +1,23 @@
-import Typography from "@mui/material/Typography";
-
-import Chip from "@mui/material/Chip";
-import Button from "@mui/material/Button";
 import React from "react";
 
-// const usePostsButtonStyle = makeStyles((theme: Theme) => ({
-// 	root: {
-// 		display: "flex",
-// 		alignItems: "center",
-// 		padding: theme.spacing(0.5, 0.5),
-// 		textAlign: "left",
-// 		textTransform: "none",
-// 	},
-// 	text: {
-// 		fontWeight: "inherit",
-// 		flexGrow: 1,
-// 	},
-// 	info: {
-// 		marginLeft: "auto",
-// 	},
-// }));
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import Button from "@mui/material/Button";
+
+import styled from "@mui/material/styles/styled";
+
+const StyledRootButton = styled(Button)(({ theme }) => ({
+	display: "flex",
+	alignItems: "center",
+	padding: theme.spacing(0.5, 0.5),
+	textAlign: "left",
+	textTransform: "none",
+}));
+
+const StyledTypography = styled(Typography)(({ theme }) => ({
+	fontWeight: "inherit",
+	flexGrow: 1,
+}));
 
 interface PostsButtonProps {
 	name: string;
@@ -34,22 +32,13 @@ const PostsButton: React.FC<PostsButtonProps> = ({
 	level,
 	url,
 }) => {
-	// FIXME makeStyle 호환성 점검
-	// const classes = usePostsButtonStyle();
-
 	return (
-		<Button
-			// classes={{ root: classes.root }}
-			href={url}
-		>
-			<Typography
-				// className={classes.text}
-				variant="body1"
-			>
+		<StyledRootButton href={url}>
+			<StyledTypography variant="body1">
 				{`${level > 0 ? "└".padEnd(level, "─") : ""}\t${name}`}
-			</Typography>
+			</StyledTypography>
 			<Chip size="small" variant="outlined" label={info} />
-		</Button>
+		</StyledRootButton>
 	);
 };
 
