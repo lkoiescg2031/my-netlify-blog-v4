@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 
 import styled from "@mui/material/styles/styled";
+import { ClassNames } from "@emotion/react";
 
 import SwipeableDrawer, {
 	SwipeableDrawerProps,
@@ -19,8 +20,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
-import BlogLayoutContext from "./BlogLayoutContext";
-import { ClassNames } from "@emotion/react";
+import BlogLayoutContext from "../BlogLayoutContext";
 
 // import PostsButton from "./PostsButton";
 // import Tags from "../../components/Tags";
@@ -28,8 +28,6 @@ import { ClassNames } from "@emotion/react";
 export const drawerWidth = 280;
 
 // const useStyles = makeStyles((theme: Theme) => ({
-// 	contactIcon: {
-// 	},
 // 	postsTreeRoot: {
 // 		height: 240,
 // 		flexGrow: 1,

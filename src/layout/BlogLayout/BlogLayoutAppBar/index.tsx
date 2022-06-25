@@ -11,32 +11,26 @@ import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import ScrollEffect from "./ScrollEffect";
-import BlogLayoutContext from "./BlogLayoutContext";
+import BlogLayoutContext from "../BlogLayoutContext";
 
 interface BlogLayoutAppBarProps {}
 
-const StyledAppBar = styled(AppBar)(
-	({ theme }) => `
-	border-bottom: 1px solid ${theme.palette.primary.dark};
-	z-index: ${theme.zIndex.drawer + 1};
-`
-);
-const StyledIconButton = styled(IconButton)(
-	({ theme }) => `
-	padding: ${theme.spacing(2)};
-`
-);
-const StyledTypography = styled(Typography)(
-	({ theme }) => `
-	flex-grow: 1;
-	margin-left: ${theme.spacing(1)};
-	margin-right: ${theme.spacing(1)};
-`
-);
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+	borderBottom: `1px solid ${theme.palette.primary.dark}`,
+	zIndex: theme.zIndex.drawer + 1,
+}));
+
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+	padding: theme.spacing(2),
+}));
+
+const StyledTypography = styled(Typography)(({ theme }) => ({
+	flexGrow: 1,
+	marginLeft: theme.spacing(1),
+	marginRight: theme.spacing(1),
+}));
 
 const BlogLayoutAppbar: React.FC<BlogLayoutAppBarProps> = (props) => {
-	// FIXME makeStyle 함수 오류 수정
-	// const classes = useStyles();
 	const { title, toggleDrawer } = useContext(BlogLayoutContext);
 
 	return (
