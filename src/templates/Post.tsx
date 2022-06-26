@@ -1,17 +1,21 @@
 import React from "react";
 import { graphql } from "gatsby";
 
-// import { makeStyles, Theme } from "@mui/material";
+import styled from "@mui/material/styles/styled";
+import { Theme, useTheme } from "@mui/material";
+import { ClassNames } from "@emotion/react";
 
-import Card from "@mui/material/Card";
+import Card, { CardProps } from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
+import Divider, { DividerProps } from "@mui/material/Divider";
 
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
-import BlogLayout from "../layout/BlogLayout";
 import { MDXRenderer } from "gatsby-plugin-mdx";
+
+import BlogLayout from "../layout/BlogLayout";
+
 // import Category from "../components/Category";
 // import Tags from "../components/Tags";
 
@@ -31,47 +35,68 @@ interface PostProps {
 	data: PostScheme;
 }
 
-// FIXME styled-component 시스탬 변경
-// const usePostStyle = makeStyles((theme: Theme) => ({
-// 	cardRoot: {
-// 		margin: `0 ${theme.spacing(10)}px`,
-// 	},
-// 	titleDivider: {
-// 		marginTop: theme.spacing(0.5),
-// 		marginBottom: theme.spacing(0.5),
-// 		borderTop: "3px double rgba(0, 0, 0, 0.12)",
-// 	},
-// }));
+const StyledCard = styled((props: CardProps) => {
+	const theme = useTheme();
+
+	return (
+		<ClassNames>
+			{({ css }) => (
+				<Card
+					{...props}
+					classes={{
+						root: css({
+							margin: `0 ${theme.spacing(10)}`,
+						}),
+					}}
+				/>
+			)}
+		</ClassNames>
+	);
+})();
+
+const StyledDivider = styled((props: DividerProps) => {
+	const theme = useTheme();
+
+	return (
+		<ClassNames>
+			{({ css }) => (
+				<Divider
+					{...props}
+					classes={{
+						root: css({
+							margin: `${theme.spacing(0.5)} 0`,
+							borderTop: "3px double rgba(0, 0, 0, 0.12)",
+						}),
+					}}
+				/>
+			)}
+		</ClassNames>
+	);
+})();
 
 const Post: React.FC<PostProps> = ({ data }) => {
-	// const classes = usePostStyle();
 	const post = data.mdx;
 
 	// const pathes = post.fields.slug.split("/").slice(1, -1);
 
-	// FIX ceo 요소 추가
+	// FIXME ceo 요소 추가
 	return (
 		<BlogLayout>
 			{/* TODO Category 살리기 */}
 			{/* <Category medium pathes={pathes} /> */}
-			<Card
-				elevation={4}
-				//classes={{ root: classes.cardRoot }}
-			>
+			<StyledCard elevation={4}>
 				<CardContent>
 					<Typography variant="h3">{post.frontmatter.title}</Typography>
 					<Typography align="right" variant="subtitle2">
 						<CalendarTodayIcon fontSize="inherit" />
 						{new Date(post.frontmatter.date).toLocaleDateString()}
 					</Typography>
-					<Divider
-					// classes={{ root: classes.titleDivider }}
-					/>
+					<StyledDivider />
 					{/* TODO Tag 살리기 */}
 					{/* <Tags align="right" tags={post.frontmatter.tags} /> */}
 					<MDXRenderer>{post.body}</MDXRenderer>
 				</CardContent>
-			</Card>
+			</StyledCard>
 		</BlogLayout>
 	);
 };
