@@ -1,10 +1,10 @@
 import React from "react";
-import { StaticQuery, graphql } from "gatsby";
+import { graphql, useStaticQuery } from "gatsby";
 
 import BlogLayout from "./BlogLayout";
 
 const Container: React.FC<any> = (props: any) => {
-	const query = graphql`
+	const data = useStaticQuery(graphql`
 		{
 			site {
 				siteMetadata {
@@ -24,23 +24,18 @@ const Container: React.FC<any> = (props: any) => {
 				}
 			}
 		}
-	`;
+	`);
 
 	return (
-		<StaticQuery
-			query={query}
-			render={(data) => (
-				<BlogLayout
-					{...props}
-					title={data.site.siteMetadata.title}
-					// categories={data.allCategory.edges[0].node}
-					// tags={data.allTag.nodes.map(({ name }) => name)}
-					profile={{
-						...data.site.siteMetadata.user,
-						desc: data.site.siteMetadata.description,
-					}}
-				/>
-			)}
+		<BlogLayout
+			{...props}
+			title={data.site.siteMetadata.title}
+			// categories={data.allCategory.edges[0].node}
+			// tags={data.allTag.nodes.map(({ name }) => name)}
+			profile={{
+				...data.site.siteMetadata.user,
+				desc: data.site.siteMetadata.description,
+			}}
 		/>
 	);
 };
