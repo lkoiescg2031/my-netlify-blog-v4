@@ -7,7 +7,32 @@ import BusinessCard, {
 	CardTemplate2,
 } from "../components/BusinessCard";
 
-const LandingPage = ({ data }) => {
+interface LandingQueryScheme {
+	site: {
+		siteMetadata: {
+			title: string;
+			description: string;
+			user: {
+				name: string;
+				figure: string;
+				position: string;
+				email: string;
+				blog: string;
+				github: string;
+				facebook: string;
+				twitter: string;
+				instagram: string;
+				linkedIn: string;
+			};
+		};
+	};
+}
+
+interface LandingPageProps {
+	data: LandingQueryScheme;
+}
+
+const LandingPage: React.FC<LandingPageProps> = ({ data }) => {
 	const { siteMetadata } = data.site;
 	const { user } = siteMetadata;
 
@@ -45,6 +70,7 @@ const LandingPage = ({ data }) => {
 };
 
 export default LandingPage;
+
 export const siteMetadata = graphql`
 	{
 		site {
