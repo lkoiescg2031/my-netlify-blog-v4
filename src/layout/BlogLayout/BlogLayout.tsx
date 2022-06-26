@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import BlogLayoutAppbar from "./BlogLayoutAppBar";
 import BlogLayoutDrawer from "./BlogLayoutDrawer";
+import SEO from "../../components/SEO";
 
 import globalTheme from "../../styles/theme";
 
@@ -123,6 +124,7 @@ class BlogLayout extends React.PureComponent<BlogLayoutProps, BlogLayoutState> {
 				}}
 			>
 				<ThemeProvider theme={globalTheme}>
+					<SEO />
 					<StyledRootDiv>
 						<CssBaseline />
 						<BlogLayoutAppbar {...this.props} />

@@ -15,6 +15,7 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 
 import BlogLayout from "../layout/BlogLayout";
+import SEO from "../components/SEO";
 
 // import Category from "../components/Category";
 // import Tags from "../components/Tags";
@@ -78,10 +79,9 @@ const Post: React.FC<PostProps> = ({ data }) => {
 	const post = data.mdx;
 
 	// const pathes = post.fields.slug.split("/").slice(1, -1);
-
-	// FIXME ceo 요소 추가
 	return (
 		<BlogLayout>
+			<SEO title={post.frontmatter.title} />
 			{/* TODO Category 살리기 */}
 			{/* <Category medium pathes={pathes} /> */}
 			<StyledCard elevation={4}>
