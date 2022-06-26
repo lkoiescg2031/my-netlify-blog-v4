@@ -50,9 +50,9 @@ const StyledSwipeableDrawer = styled((props: SwipeableDrawerProps) => (
 			/>
 		)}
 	</ClassNames>
-))`
-	z-index: 1300;
-`;
+))(({ theme }) => ({
+	zIndex: theme.zIndex.modal,
+}));
 
 const StyledToolbar = styled((props: { children: JSX.Element }) => (
 	<div {...props} />
