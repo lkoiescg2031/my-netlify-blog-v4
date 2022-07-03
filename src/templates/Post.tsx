@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { graphql, PageProps } from "gatsby";
 
 import styled from "@mui/material/styles/styled";
 import { Theme, useTheme } from "@mui/material";
@@ -19,22 +19,6 @@ import SEO from "../components/SEO";
 
 // import Category from "../components/Category";
 // import Tags from "../components/Tags";
-
-interface PostScheme {
-	mdx: {
-		frontmatter: {
-			title: string;
-			tags: string;
-			category: string;
-			date: string;
-		};
-		body: string;
-	};
-}
-
-interface PostProps {
-	data: PostScheme;
-}
 
 const StyledCard = styled((props: CardProps) => {
 	const theme = useTheme();
@@ -75,26 +59,24 @@ const StyledDivider = styled((props: DividerProps) => {
 	);
 })();
 
-const Post: React.FC<PostProps> = ({ data }) => {
-	const post = data.mdx;
-
+const Post = ({ data }: PageProps<Queries.PostQuery>) => {
 	// const pathes = post.fields.slug.split("/").slice(1, -1);
 	return (
 		<BlogLayout>
-			<SEO title={post.frontmatter.title} />
+			<SEO title={data.mdx?.frontmatter?.title} />
 			{/* TODO Category 살리기 */}
 			{/* <Category medium pathes={pathes} /> */}
 			<StyledCard elevation={4}>
 				<CardContent>
-					<Typography variant="h3">{post.frontmatter.title}</Typography>
+					<Typography variant="h3">{data.mdx?.frontmatter?.title}</Typography>
 					<Typography align="right" variant="subtitle2">
 						<CalendarTodayIcon fontSize="inherit" />
-						{new Date(post.frontmatter.date).toLocaleDateString()}
+						{new Date(data.mdx?.frontmatter?.date!!).toLocaleDateString()}
 					</Typography>
 					<StyledDivider />
 					{/* TODO Tag 살리기 */}
 					{/* <Tags align="right" tags={post.frontmatter.tags} /> */}
-					<MDXRenderer>{post.body}</MDXRenderer>
+					<MDXRenderer>{data.mdx?.body!!}</MDXRenderer>
 				</CardContent>
 			</StyledCard>
 		</BlogLayout>
@@ -102,7 +84,7 @@ const Post: React.FC<PostProps> = ({ data }) => {
 };
 
 export const query = graphql`
-	query getMdx($id: String!) {
+	query Post($id: String!) {
 		mdx(id: { eq: $id }) {
 			id
 			frontmatter {

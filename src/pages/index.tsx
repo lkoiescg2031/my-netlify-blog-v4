@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql, navigate } from "gatsby";
+import { graphql, navigate, PageProps } from "gatsby";
 
 import MouseEffectLayout from "../layout/MouseEffectLayout";
 import BusinessCard, {
@@ -7,34 +7,9 @@ import BusinessCard, {
 	CardTemplate2,
 } from "../components/BusinessCard";
 
-interface LandingQueryScheme {
-	site: {
-		siteMetadata: {
-			title: string;
-			description: string;
-			user: {
-				name: string;
-				figure: string;
-				position: string;
-				email: string;
-				blog: string;
-				github: string;
-				facebook: string;
-				twitter: string;
-				instagram: string;
-				linkedIn: string;
-			};
-		};
-	};
-}
-
-interface LandingPageProps {
-	data: LandingQueryScheme;
-}
-
-const LandingPage: React.FC<LandingPageProps> = ({ data }) => {
-	const { siteMetadata } = data.site;
-	const { user } = siteMetadata;
+const LandingPage = ({ data }: PageProps<Queries.LandingPageQuery>) => {
+	const { siteMetadata } = data.site || {};
+	const { user } = siteMetadata || {};
 
 	const moveToHome = () => {
 		navigate("/Posts");
@@ -44,22 +19,22 @@ const LandingPage: React.FC<LandingPageProps> = ({ data }) => {
 		<MouseEffectLayout>
 			<BusinessCard>
 				<CardTemplate1
-					title={siteMetadata.title}
-					subTitle={siteMetadata.description}
+					title={siteMetadata?.title!!}
+					subTitle={siteMetadata?.description!!}
 					hasNextButton
 				/>
 				<CardTemplate2
-					name={user.name}
-					figure={user.figure}
-					position={user.position}
-					email={user.email}
-					blog={user.blog}
-					github={user.github}
+					name={user?.name!!}
+					figure={user?.figure!!}
+					position={user?.position!!}
+					email={user?.email!!}
+					blog={user?.blog!!}
+					github={user?.github!!}
 					//sns options
-					facebook={user.facebook}
-					linkedIn={user.linkedIn}
-					twitter={user.twitter}
-					instagram={user.instagram}
+					facebook={user?.facebook!!}
+					linkedIn={user?.linkedIn!!}
+					twitter={user?.twitter!!}
+					instagram={user?.instagram!!}
 					//homebutton options
 					hasNextButton
 					homeButtonCallback={moveToHome}
@@ -69,10 +44,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ data }) => {
 	);
 };
 
-export default LandingPage;
-
-export const siteMetadata = graphql`
-	{
+export const query = graphql`
+	query LandingPage {
 		site {
 			siteMetadata {
 				title
@@ -93,3 +66,5 @@ export const siteMetadata = graphql`
 		}
 	}
 `;
+
+export default LandingPage;
