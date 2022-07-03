@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+import styled from "@emotion/styled";
+
+import { BusinessCardProvider } from "./BusinessCardContext";
 
 import color from "../../styles/color";
-
-import { Provider } from "./context.js";
-import styled from "@emotion/styled";
 
 interface BusinessCardProps {
 	children: React.ReactElement[];
@@ -73,11 +73,11 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ children }) => {
 	}, [currentCardIdx]);
 
 	return (
-		<Provider value={{ currentCardIdx, setCard: changeTo }}>
+		<BusinessCardProvider value={{ currentCardIdx, setCard: changeTo }}>
 			<StyledBusinessCardDiv ref={businessCardRef}>
 				{children[currentCardIdx]}
 			</StyledBusinessCardDiv>
-		</Provider>
+		</BusinessCardProvider>
 	);
 };
 

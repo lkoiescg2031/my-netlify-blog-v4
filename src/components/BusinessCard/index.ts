@@ -1,10 +1,10 @@
-import BusinessCard from './BusinessCard';
+import BusinessCard from "./BusinessCard";
 
-import { Consumer } from './context';
+import { BusinessCardConsumer } from "./BusinessCardContext";
 
-import CardTemplate1 from './CardTemplate1';
-import CardTemplate2 from './CardTemplate2';
+import CardTemplate1 from "./CardTemplate1";
+import CardTemplate2 from "./CardTemplate2";
 
-export { Consumer, CardTemplate1, CardTemplate2 };
+export { BusinessCardConsumer, CardTemplate1, CardTemplate2 };
 
 export default BusinessCard;
