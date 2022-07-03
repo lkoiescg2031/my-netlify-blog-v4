@@ -44,6 +44,22 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ children }) => {
 		return animation;
 	};
 
+	const showBusinessCardAnimation = () => {
+		if (businessCardRef.current === null) {
+			return;
+		}
+
+		const animation = businessCardRef.current.animate(
+			[
+				{ transform: "rotate3D(0.5, 0.5, 0, 90deg)" },
+				{ transform: "rotate3D(0.5, 0.5, 0, 0deg)" },
+			],
+			220
+		).finished;
+
+		return animation;
+	};
+
 	const changeTo = async (number: number) => {
 		//번호 미입력시 보정
 		if (typeof number === "undefined") {
@@ -55,22 +71,9 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ children }) => {
 		await hideBusinessCardAnimation();
 
 		setCurrentCardIdx(number);
+
+		await showBusinessCardAnimation();
 	};
-
-	// showBusinessCardAnimation
-	useEffect(() => {
-		if (businessCardRef.current === null) {
-			return;
-		}
-
-		businessCardRef.current.animate(
-			[
-				{ transform: "rotate3D(0.5, 0.5, 0, 90deg)" },
-				{ transform: "rotate3D(0.5, 0.5, 0, 0deg)" },
-			],
-			220
-		);
-	}, [currentCardIdx]);
 
 	return (
 		<BusinessCardProvider value={{ currentCardIdx, setCard: changeTo }}>
