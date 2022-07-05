@@ -23,7 +23,9 @@ const BusinessCardTitle = styled.h1({
 });
 
 const BusinessCardSubtitle = styled.h4({
-	margin: "40px 15%",
+	margin: "50px 12%",
+	lineHeight: "30px",
+	textAlign: "center",
 });
 
 const BusinessCardButton = styled.button({
@@ -73,7 +75,7 @@ const CardTemplate1: React.FC<CardTemplate1Props> = ({
 	return (
 		<BusinessCardDiv>
 			<BusinessCardTitle>{title}</BusinessCardTitle>
-			<BusinessCardSubtitle>{subTitle}</BusinessCardSubtitle>
+			<BusinessCardSubtitle dangerouslySetInnerHTML={{ __html: subTitle }} />
 			{hasNextButton && (
 				<BusinessCardButton onClick={handlerWrapper}>
 					<i className={`xi-caret-down-square-o xi-2x`} />

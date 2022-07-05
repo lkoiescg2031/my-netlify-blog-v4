@@ -1,2 +1,2 @@
-import Container from './Container';
-export default Container;
+import BlogLayoutContainer from "./BlogLayoutContainer";
+export default BlogLayoutContainer;

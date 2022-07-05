@@ -138,9 +138,11 @@ const BlogLayoutDrawer: React.FC = () => {
 							<Typography variant="h6" color="inherit">
 								{profile.name}
 							</Typography>
-							<StyledDescTypography variant="body2" color="inherit">
-								{profile.desc}
-							</StyledDescTypography>
+							<StyledDescTypography
+								variant="body2"
+								color="inherit"
+								dangerouslySetInnerHTML={{ __html: profile.desc || "" }}
+							/>
 							<StyledContactWrapper>
 								{profile.email && (
 									<StyledSNSIconButton href={`mailto:${profile.email}`}>
