@@ -80,8 +80,7 @@ const BusinessCardHomeButton = styled.button({
 	right: 0,
 	bottom: 0,
 
-	// FIXME add @emotion library ani
-	// ...businessCardTheme.bouncingHorizonAni,
+	...businessCardTheme.bouncingHorizonAni,
 });
 
 interface CardTemplate2Props {

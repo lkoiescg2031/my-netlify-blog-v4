@@ -6,6 +6,7 @@ import BusinessCard, {
 	CardTemplate1,
 	CardTemplate2,
 } from "../components/BusinessCard";
+import SEO from "../components/SEO";
 
 const LandingPage = ({ data }: PageProps<Queries.LandingPageQuery>) => {
 	const { siteMetadata } = data.site || {};
@@ -17,6 +18,7 @@ const LandingPage = ({ data }: PageProps<Queries.LandingPageQuery>) => {
 
 	return (
 		<MouseEffectLayout>
+			<SEO />
 			<BusinessCard>
 				<CardTemplate1
 					title={siteMetadata?.title!!}
