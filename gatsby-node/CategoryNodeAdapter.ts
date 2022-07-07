@@ -1,4 +1,12 @@
-import { SourceNodesArgs, NodeInput } from "gatsby";
+import {
+	GatsbyNode,
+	SourceNodesArgs,
+	NodeInput,
+	CreatePagesArgs,
+	CreateNodeArgs,
+} from "gatsby";
+import { createFilePath } from "gatsby-source-filesystem";
+import path from "path";
 
 const USE_NODE_TYPE = "File";
 const FILE_INSTANCE_TYPE = "posts";
@@ -7,14 +15,22 @@ const USE_EXTENSION_TYPES = [".md", ".mdx"];
 const POST_ROOT_DIR_NAME = "posts";
 const POST_URL_ROOT_PATH = "Posts";
 
+const POST_NODE_TYPE = "Mdx";
+
 type CATEGORY_NODE_TYPE = "Category";
 const CATEGORY_NODE_TYPE_NAME = "Category";
 
+const CATEGORY_RENDER_PAGE_TEMPLATE = "./src/templates/Category.tsx";
+
+interface CategoryNodeAdapter extends GatsbyNode {
+	createPages: (args: CreatePagesArgs) => Promise<void>;
+}
+
 interface Category extends NodeInput {
 	absolutePath: string;
-	relativePath: string;
+	url: string;
 	categoryName: string;
-	postsCnt: number;
+	postSize: number;
 
 	id: string;
 	internal: {
@@ -29,7 +45,19 @@ interface CategoryMap {
 	[categoryId: string]: Category;
 }
 
-export default class CategoryNodeAdapter {
+interface AllCategoryQueryScheme {
+	errors?: any;
+	data?: {
+		allCategory: {
+			nodes: {
+				url: string;
+				absolutePath: string;
+			}[];
+		};
+	};
+}
+
+export default class MdxPageNodeAdapter implements CategoryNodeAdapter {
 	sourceNodes({
 		getNodesByType,
 		createNodeId,
@@ -50,27 +78,21 @@ export default class CategoryNodeAdapter {
 		const createCategoryNode: (
 			parent: string | null,
 			absolutePath: string,
+			url: string,
 			categoryName: string
-		) => Category = (parent, absolutePath, categoryName) => {
-			const afterPosts = absolutePath.split(`/${POST_ROOT_DIR_NAME}/`)[1];
-			const relativePath = `/${POST_URL_ROOT_PATH}${
-				typeof afterPosts === "undefined" ? "" : `/${afterPosts}`
-			}`;
-
-			return {
-				absolutePath,
-				relativePath,
-				categoryName,
-				postsCnt: 1,
-				id: createNodeId(`category-${absolutePath}`),
-				internal: {
-					type: CATEGORY_NODE_TYPE_NAME,
-					contentDigest: createContentDigest(absolutePath),
-				},
-				parent,
-				children: [],
-			};
-		};
+		) => Category = (parent, absolutePath, url, categoryName) => ({
+			absolutePath,
+			url,
+			categoryName,
+			postSize: 1,
+			id: createNodeId(`category-${absolutePath}`),
+			internal: {
+				type: CATEGORY_NODE_TYPE_NAME,
+				contentDigest: createContentDigest(absolutePath),
+			},
+			parent,
+			children: [],
+		});
 
 		const extractCategory: (
 			postPath: string,
@@ -79,29 +101,33 @@ export default class CategoryNodeAdapter {
 			const [beforePosts, afterPosts] = postPath.split(
 				`/${POST_ROOT_DIR_NAME}/`
 			);
-			const [...orderedCategoryNames] = [
-				POST_URL_ROOT_PATH,
-				...afterPosts.split("/"),
-			];
-			const _fileName = orderedCategoryNames.pop();
 
-			let parentPath = beforePosts;
+			// 파일명 제외한(마지막 원소가 파일명) 카테고리 이름 목록
+			const categoryNames = afterPosts.split("/").slice(0, -1);
+			const orderedCategoryNames = [POST_URL_ROOT_PATH, ...categoryNames];
+			const orderedCategoryPath = [POST_ROOT_DIR_NAME, ...categoryNames];
+
+			let parentPath = "";
+			let absolutePathPrefix = beforePosts;
 
 			return orderedCategoryNames.reduce(
-				(categories: CategoryMap, categoryName: string) => {
-					const currentPath = `${parentPath}/${categoryName}`;
+				(categories: CategoryMap, categoryName: string, currentIdx: number) => {
+					const url = `${parentPath}/${categoryName}`;
+					const absolutePath = `${absolutePathPrefix}/${orderedCategoryPath[currentIdx]}`;
 
-					if (!categoryMap.hasOwnProperty(currentPath)) {
-						categories[currentPath] = createCategoryNode(
-							parentPath === beforePosts ? null : parentPath,
-							currentPath,
+					if (!categoryMap.hasOwnProperty(absolutePath)) {
+						categories[absolutePath] = createCategoryNode(
+							absolutePath === beforePosts ? null : absolutePath,
+							absolutePath,
+							url,
 							categoryName
 						);
 					} else {
-						categoryMap[currentPath].postsCnt += 1;
+						categoryMap[absolutePath].postSize += 1;
 					}
 
-					parentPath = currentPath;
+					parentPath = url;
+					absolutePathPrefix = absolutePath;
 					return categories;
 				},
 				{}
@@ -155,5 +181,66 @@ export default class CategoryNodeAdapter {
 			createNode(node);
 		});
 		console.log(" \x1b[32msuccess \x1b[0mcreate category nodes");
+	}
+
+	async createPages({ graphql, actions }: CreatePagesArgs) {
+		const { createPage } = actions;
+
+		const result: AllCategoryQueryScheme = await graphql(`
+			query allCategory {
+				allCategory {
+					nodes {
+						url
+						absolutePath
+					}
+				}
+			}
+		`);
+
+		//포스트 카테고리별 페이지 생성
+		const toRegexStr = (str: string) => {
+			return `/${str.replace("+", "\\+")}/`;
+		};
+
+		const toEncode = (str: string) => {
+			return str.replace("#", escape("#"));
+		};
+
+		result.data?.allCategory.nodes.forEach((node) => {
+			createPage({
+				path: toEncode(node.url),
+				component: path.resolve(CATEGORY_RENDER_PAGE_TEMPLATE),
+				context: {
+					slug: toRegexStr(node.absolutePath),
+				},
+			});
+		});
+
+		console.log(" \x1b[32msuccess \x1b[0mcreate category pages");
+	}
+
+	async onCreateNode({ node, getNode, actions }: CreateNodeArgs) {
+		const { createNodeField } = actions;
+
+		if (node.internal.type === POST_NODE_TYPE) {
+			const slug = createFilePath({
+				node,
+				getNode,
+				basePath: "pages",
+				trailingSlash: false,
+			});
+
+			const postUrl = `/${POST_URL_ROOT_PATH}${slug}`;
+
+			createNodeField({
+				node,
+				name: `url`,
+				value: postUrl,
+			});
+
+			console.log(
+				" \x1b[32msuccess \x1b[0mappend node fields url value " + postUrl
+			);
+		}
 	}
 }

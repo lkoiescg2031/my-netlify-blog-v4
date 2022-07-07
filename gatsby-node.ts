@@ -3,7 +3,7 @@ import { GatsbyNode, SourceNodesArgs } from "gatsby";
 import MdxPageNodeAdapter from "./gatsby-node/MdxPageNodeAdapter";
 import CategoryNodeAdapter from "./gatsby-node/CategoryNodeAdapter";
 
-const mdxPageNodeAdapter = new MdxPageNodeAdapter("./src/templates/Post.tsx");
+const mdxPageNodeAdapter = new MdxPageNodeAdapter();
 const categoryNodeAdapter = new CategoryNodeAdapter();
 
 const gatsbyNode: GatsbyNode = {
@@ -11,7 +11,12 @@ const gatsbyNode: GatsbyNode = {
 		categoryNodeAdapter.sourceNodes(sourceNodeArgs);
 	},
 
+	onCreateNode(createPageArgs) {
+		categoryNodeAdapter.onCreateNode(createPageArgs);
+	},
+
 	async createPages(createPagesArgs) {
+		await categoryNodeAdapter.createPages(createPagesArgs);
 		await mdxPageNodeAdapter.createPages(createPagesArgs);
 	},
 };

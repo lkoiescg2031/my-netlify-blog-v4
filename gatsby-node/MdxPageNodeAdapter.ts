@@ -2,6 +2,11 @@ import { CreatePagesArgs, GatsbyNode } from "gatsby";
 
 import path from "path";
 
+const POST_TEMPLATE_PATH = "./src/templates/Post.tsx";
+
+const POST_ROOT_DIR = "posts";
+const POST_ROOT_URL = "Posts";
+
 interface CreateMdxGatsbyNode extends GatsbyNode {
 	createPages: (args: CreatePagesArgs) => Promise<void>;
 }
@@ -23,12 +28,6 @@ interface AllMdxQueryScheme {
 }
 
 export default class MdxPageNodeAdapter implements CreateMdxGatsbyNode {
-	private pageTemplatePath: string;
-
-	constructor(pageTemplatePath: string) {
-		this.pageTemplatePath = pageTemplatePath;
-	}
-
 	async createPages({ graphql, actions }: CreatePagesArgs): Promise<void> {
 		const { createPage } = actions;
 
@@ -47,11 +46,15 @@ export default class MdxPageNodeAdapter implements CreateMdxGatsbyNode {
 
 		result.data?.allMdx.edges.forEach(({ node }) => {
 			const { id, fileAbsolutePath } = node;
-			const [_, fileRelativePath] = fileAbsolutePath.split("src");
+			const [_, fileRelativePath] = fileAbsolutePath.split(POST_ROOT_DIR);
+			const fileRelativePathWithOutExt = fileRelativePath
+				.split(".")
+				.slice(0, -1)
+				.join(".");
 
 			createPage({
-				path: fileRelativePath,
-				component: path.resolve(this.pageTemplatePath),
+				path: POST_ROOT_URL + fileRelativePathWithOutExt,
+				component: path.resolve(POST_TEMPLATE_PATH),
 				context: {
 					id,
 				},
