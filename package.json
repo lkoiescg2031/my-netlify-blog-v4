@@ -19,6 +19,7 @@
 		"@emotion/react": "^11.9.3",
 		"@emotion/styled": "^11.9.3",
 		"@fontsource/roboto": "^4.5.7",
+		"@lkoiescg2031/react-breakout": "^0.1.1",
 		"@mdx-js/mdx": "^1.6.22",
 		"@mdx-js/react": "^1.6.22",
 		"@mui/icons-material": "^5.8.4",
