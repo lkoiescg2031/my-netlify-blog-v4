@@ -4,8 +4,6 @@ import React from "react";
 import PostsButton from "./PostsButton";
 
 const CategoryTree: React.FC = () => {
-	// FIXME children 노드 랜더 오류
-	// 생성시 발생한 오류로 추정
 	const data: Queries.CategoryTreeQuery = useStaticQuery(graphql`
 		query CategoryTree {
 			allCategory(filter: { parent: { id: { eq: null } } }) {

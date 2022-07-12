@@ -10,7 +10,6 @@ interface SEOProps {
 	meta?: Array<{}>;
 }
 
-// FIXME 파비콘 설정 추가 필요
 const SEO: React.FC<SEOProps> = ({ lang = "ko", title, description, meta }) => {
 	const { site } = useStaticQuery(
 		graphql`

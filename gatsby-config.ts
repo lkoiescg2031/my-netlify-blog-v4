@@ -44,9 +44,12 @@ const config: GatsbyConfig = {
 		"gatsby-plugin-react-helmet",
 		"gatsby-plugin-sitemap",
 		{
-			resolve: "gatsby-plugin-manifest",
+			resolve: `gatsby-plugin-manifest`,
 			options: {
-				icon: "src/images/icon.png",
+				name: `Backend Developer Log`,
+				short_name: `sw engineer`,
+				display: `standalone`,
+				icon: `src/images/blog_icon.png`, // This path is relative to the root of the site.
 			},
 		},
 		{
@@ -64,6 +67,11 @@ const config: GatsbyConfig = {
 			},
 		},
 		"gatsby-plugin-sharp",
+		// FIXME gatsby-transformer-sharp 업데이트
+		/** warn [gatsby-transformer-sharp] The "fixed" and "fluid" resolvers are now deprecated. Switch to
+"gatsby-plugin-image" for better performance and a simpler API. See https://gatsby.dev/migrate-images to
+learn how.
+		 */
 		"gatsby-transformer-sharp",
 		{
 			resolve: "gatsby-source-filesystem",
