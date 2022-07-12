@@ -10,13 +10,6 @@ const BusinessCardContext = React.createContext<BusinessCard>({
 	setCard: async () => {},
 });
 
-// export function clickHandler(handler) {
-// 	return (event) => {
-// 		event.preventDefault();
-// 		handler();
-// 	};
-// }
-
 export const BusinessCardProvider = BusinessCardContext.Provider;
 export const BusinessCardConsumer = BusinessCardContext.Consumer;
 

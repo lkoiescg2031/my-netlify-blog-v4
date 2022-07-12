@@ -46,8 +46,7 @@ interface BlogLayoutState {
 	isOpenDrawer: boolean;
 }
 
-// FIXME add state interface
-// FIXME change to func components
+// FIXME 함수형 컴포넌트로 변환
 class BlogLayout extends React.PureComponent<BlogLayoutProps, BlogLayoutState> {
 	static propTypes = {
 		title: PropTypes.string.isRequired,

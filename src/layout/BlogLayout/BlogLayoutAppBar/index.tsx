@@ -52,7 +52,7 @@ const BlogLayoutAppbar: React.FC<BlogLayoutAppBarProps> = (props) => {
 						<Button color="inherit" size="large" href="/Posts">
 							posts
 						</Button>
-						{/* FIXME update project */}
+						{/* FIXME 프로젝트 페이지 생성 */}
 						{/* <Button
 							color="inherit"
 							size="large"
@@ -61,7 +61,7 @@ const BlogLayoutAppbar: React.FC<BlogLayoutAppBarProps> = (props) => {
 							projects
 						</Button> */}
 					</Hidden>
-					{/* FIXME update aboutme */}
+					{/* 첼린지 생성 */}
 					{/* <Hidden implementation="css" smDown>
 						<Button
 							color="inherit"
@@ -69,8 +69,9 @@ const BlogLayoutAppbar: React.FC<BlogLayoutAppBarProps> = (props) => {
 							onClick={onClicker('/challenges')}
 						>
 							challenges
-						</Button>
-						<Button
+					</Button>*/}
+					{/* FIXME update 이력서 페이지 생성 */}
+					{/*	<Button
 							color="inherit"
 							size="large"
 							onClick={onClicker('/aboutme')}

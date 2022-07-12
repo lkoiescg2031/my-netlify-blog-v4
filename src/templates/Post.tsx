@@ -2,7 +2,7 @@ import React from "react";
 import { graphql, PageProps } from "gatsby";
 
 import styled from "@mui/material/styles/styled";
-import { Theme, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { ClassNames } from "@emotion/react";
 
 import Card, { CardProps } from "@mui/material/Card";
@@ -17,7 +17,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 import BlogLayout from "../layout/BlogLayout";
 import SEO from "../components/SEO";
 
-// import Category from "../components/Category";
+import Category from "../components/Category";
 // import Tags from "../components/Tags";
 
 const StyledCard = styled((props: CardProps) => {
@@ -37,7 +37,7 @@ const StyledCard = styled((props: CardProps) => {
 			)}
 		</ClassNames>
 	);
-})();
+})({});
 
 const StyledDivider = styled((props: DividerProps) => {
 	const theme = useTheme();
@@ -57,15 +57,14 @@ const StyledDivider = styled((props: DividerProps) => {
 			)}
 		</ClassNames>
 	);
-})();
+})({});
 
 const Post = ({ data }: PageProps<Queries.PostQuery>) => {
-	// const pathes = post.fields.slug.split("/").slice(1, -1);
+	const pathes = data.mdx?.fields?.url?.split("/").slice(1, -1) || [];
 	return (
 		<BlogLayout>
 			<SEO title={data.mdx?.frontmatter?.title} />
-			{/* TODO Category 살리기 */}
-			{/* <Category medium pathes={pathes} /> */}
+			<Category medium pathes={pathes} />
 			<StyledCard elevation={4}>
 				<CardContent>
 					<Typography variant="h3">{data.mdx?.frontmatter?.title}</Typography>
@@ -87,6 +86,9 @@ export const query = graphql`
 	query Post($id: String!) {
 		mdx(id: { eq: $id }) {
 			id
+			fields {
+				url
+			}
 			frontmatter {
 				title
 				tags

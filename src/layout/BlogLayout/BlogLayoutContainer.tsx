@@ -4,8 +4,8 @@ import { graphql, useStaticQuery } from "gatsby";
 import BlogLayout from "./BlogLayout";
 
 const BlogLayoutContainer: React.FC<any> = (props: any) => {
-	const data = useStaticQuery(graphql`
-		{
+	const data: Queries.siteMetadataQuery = useStaticQuery(graphql`
+		query siteMetadata {
 			site {
 				siteMetadata {
 					title
@@ -29,10 +29,9 @@ const BlogLayoutContainer: React.FC<any> = (props: any) => {
 	return (
 		<BlogLayout
 			{...props}
-			title={data.site.siteMetadata.title}
-			// categories={data.allCategory.edges[0].node}
+			title={data.site?.siteMetadata?.title}
 			// tags={data.allTag.nodes.map(({ name }) => name)}
-			profile={data.site.siteMetadata.user}
+			profile={data.site?.siteMetadata?.user}
 		/>
 	);
 };

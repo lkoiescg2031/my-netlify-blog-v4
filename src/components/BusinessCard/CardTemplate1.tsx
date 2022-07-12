@@ -64,7 +64,6 @@ const CardTemplate1: React.FC<CardTemplate1Props> = ({
 		event.preventDefault();
 
 		// FIXME refactoring nextButtonCallback 파라메터 필요한 분긴지 확인
-		// FIXME setCard 호출 확인
 		if (nextButtonCallback) {
 			nextButtonCallback(event);
 		} else {

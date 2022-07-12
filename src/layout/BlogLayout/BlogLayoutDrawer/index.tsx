@@ -22,7 +22,8 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 import BlogLayoutContext from "../BlogLayoutContext";
 
-// import PostsButton from "./PostsButton";
+import CategoryTree from "./CategoryTree";
+
 // import Tags from "../../components/Tags";
 
 export const drawerWidth = 280;
@@ -178,24 +179,8 @@ const BlogLayoutDrawer: React.FC = () => {
 						</StyledProfileRoot>
 						<Divider />
 						{/* TODO 카테고리 노출 기능 */}
-						{/* {(function renderPosts(root, level = 0) {
-								return (
-									<React.Fragment key={root.url}>
-										<PostsButton
-											name={root.name}
-											info={root.postsCnt}
-											url={root.url}
-											level={level}
-										/>
-										{Array.isArray(root.children)
-											? root.children.map((child: object | undefined) =>
-													renderPosts(child, level + 1)
-												)
-											: null}
-									</React.Fragment>
-									);
-						})(categories)}
-						<Divider /> */}
+						<CategoryTree />
+						<Divider />
 						{/* TODO 테그 노출 기능 */}
 						{/* <Button href="/Tags">Tags</Button>
 						<Tags align="center" tags={tags} />
