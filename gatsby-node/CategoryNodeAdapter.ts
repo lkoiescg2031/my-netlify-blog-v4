@@ -117,7 +117,7 @@ export default class MdxPageNodeAdapter implements CategoryNodeAdapter {
 
 					if (!categoryMap.hasOwnProperty(absolutePath)) {
 						categories[absolutePath] = createCategoryNode(
-							absolutePath === beforePosts ? null : absolutePath,
+							absolutePathPrefix === beforePosts ? null : absolutePathPrefix,
 							absolutePath,
 							url,
 							categoryName
@@ -139,8 +139,13 @@ export default class MdxPageNodeAdapter implements CategoryNodeAdapter {
 		) => {
 			Object.values(categoryMap).forEach((category) => {
 				if (category.parent != null) {
-					categoryMap[category.parent].id;
+					category.parent = categoryMap[category.parent].id;
 				}
+			});
+
+			Object.entries(categoryMap).forEach(([key, category]) => {
+				categoryMap[category.id] = category;
+				delete categoryMap[key];
 			});
 		};
 
@@ -150,7 +155,6 @@ export default class MdxPageNodeAdapter implements CategoryNodeAdapter {
 			Object.values(categoryMap).forEach((node) => {
 				const nodeID = node.id;
 				const parentID = node.parent;
-
 				if (parentID !== null) {
 					categoryMap[parentID].children.push(nodeID);
 				}

@@ -59,10 +59,7 @@ const CategoryTemplate = ({
 export const query = graphql`
 	query PostsByCategory($slug: String!) {
 		allMdx(
-			filter: {
-				fileAbsolutePath: { regex: $slug }
-				frontmatter: { private: { eq: false } }
-			}
+			filter: { fileAbsolutePath: { regex: $slug } }
 			sort: { fields: frontmatter___date, order: DESC }
 		) {
 			nodes {
