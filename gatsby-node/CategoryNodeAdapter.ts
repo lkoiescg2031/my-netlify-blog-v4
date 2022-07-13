@@ -187,6 +187,31 @@ export default class MdxPageNodeAdapter implements CategoryNodeAdapter {
 		console.log(" \x1b[32msuccess \x1b[0mcreate category nodes");
 	}
 
+	async onCreateNode({ node, getNode, actions }: CreateNodeArgs) {
+		const { createNodeField } = actions;
+
+		if (node.internal.type === POST_NODE_TYPE) {
+			const slug = createFilePath({
+				node,
+				getNode,
+				basePath: "pages",
+				trailingSlash: false,
+			});
+
+			const postUrl = `/${POST_URL_ROOT_PATH}${slug}`;
+
+			createNodeField({
+				node,
+				name: `url`,
+				value: postUrl,
+			});
+
+			console.log(
+				" \x1b[32msuccess \x1b[0mappend node fields url value " + postUrl
+			);
+		}
+	}
+
 	async createPages({ graphql, actions }: CreatePagesArgs) {
 		const { createPage } = actions;
 
@@ -221,30 +246,5 @@ export default class MdxPageNodeAdapter implements CategoryNodeAdapter {
 		});
 
 		console.log(" \x1b[32msuccess \x1b[0mcreate category pages");
-	}
-
-	async onCreateNode({ node, getNode, actions }: CreateNodeArgs) {
-		const { createNodeField } = actions;
-
-		if (node.internal.type === POST_NODE_TYPE) {
-			const slug = createFilePath({
-				node,
-				getNode,
-				basePath: "pages",
-				trailingSlash: false,
-			});
-
-			const postUrl = `/${POST_URL_ROOT_PATH}${slug}`;
-
-			createNodeField({
-				node,
-				name: `url`,
-				value: postUrl,
-			});
-
-			console.log(
-				" \x1b[32msuccess \x1b[0mappend node fields url value " + postUrl
-			);
-		}
 	}
 }
