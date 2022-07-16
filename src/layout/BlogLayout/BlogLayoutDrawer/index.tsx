@@ -10,6 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
 import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -24,17 +25,9 @@ import BlogLayoutContext from "../BlogLayoutContext";
 
 import CategoryTree from "./CategoryTree";
 
-// import Tags from "../../components/Tags";
+import AllTags from "./AllTags";
 
 export const drawerWidth = 280;
-
-// const useStyles = makeStyles((theme: Theme) => ({
-// 	postsTreeRoot: {
-// 		height: 240,
-// 		flexGrow: 1,
-// 		maxWidth: 400,
-// 	},
-// }));
 
 const StyledSwipeableDrawer = styled((props: SwipeableDrawerProps) => (
 	<ClassNames>
@@ -113,8 +106,7 @@ const StyledDescTypography = styled(Typography)(({ theme }) => ({
 }));
 
 const BlogLayoutDrawer: React.FC = () => {
-	const { isOpenDrawer, toggleDrawer, profile, categories, tags } =
-		useContext(BlogLayoutContext);
+	const { isOpenDrawer, toggleDrawer, profile } = useContext(BlogLayoutContext);
 
 	return (
 		<nav>
@@ -178,13 +170,11 @@ const BlogLayoutDrawer: React.FC = () => {
 							</StyledContactWrapper>
 						</StyledProfileRoot>
 						<Divider />
-						{/* TODO 카테고리 노출 기능 */}
 						<CategoryTree />
 						<Divider />
-						{/* TODO 테그 노출 기능 */}
-						{/* <Button href="/Tags">Tags</Button>
-						<Tags align="center" tags={tags} />
-						<Divider /> */}
+						<Button href="/Tags">Tags</Button>
+						<AllTags />
+						<Divider />
 					</>
 				)}
 			</StyledSwipeableDrawer>

@@ -16,8 +16,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
-// FIXME 태그 추가
-// import Tags from "./Tags";
+import Tags from "./Tags";
 import { getRandomInt } from "../utils/math";
 
 const PostWrapper = styled("div")({
@@ -164,7 +163,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
 								).toLocaleDateString()}
 							</Typography>
 							<Typography variant="h6">{post.frontmatter?.title}</Typography>
-							{/* <Tags outlined tags={post.frontmatter.tags} /> */}
+							<Tags outlined tags={post.frontmatter?.tags || []} />
 						</>
 					}
 				/>

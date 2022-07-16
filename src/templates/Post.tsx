@@ -18,7 +18,7 @@ import BlogLayout from "../layout/BlogLayout";
 import SEO from "../components/SEO";
 
 import Category from "../components/Category";
-// import Tags from "../components/Tags";
+import Tags from "../components/Tags";
 
 const StyledCard = styled((props: CardProps) => {
 	const theme = useTheme();
@@ -61,6 +61,7 @@ const StyledDivider = styled((props: DividerProps) => {
 
 const Post = ({ data }: PageProps<Queries.PostQuery>) => {
 	const pathes = data.mdx?.fields?.url?.split("/").slice(1, -1) || [];
+
 	return (
 		<BlogLayout>
 			<SEO title={data.mdx?.frontmatter?.title} />
@@ -73,8 +74,7 @@ const Post = ({ data }: PageProps<Queries.PostQuery>) => {
 						{new Date(data.mdx?.frontmatter?.date!!).toLocaleDateString()}
 					</Typography>
 					<StyledDivider />
-					{/* TODO Tag 살리기 */}
-					{/* <Tags align="right" tags={post.frontmatter.tags} /> */}
+					<Tags align="right" tags={data.mdx?.frontmatter?.tags || []} />
 					<MDXRenderer>{data.mdx?.body!!}</MDXRenderer>
 				</CardContent>
 			</StyledCard>

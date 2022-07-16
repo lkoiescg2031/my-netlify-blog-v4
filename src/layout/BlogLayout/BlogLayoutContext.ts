@@ -17,8 +17,6 @@ interface BlogLayoutContextProps {
 	isOpenDrawer: boolean;
 	toggleDrawer: MouseEventHandler<HTMLButtonElement>;
 	profile?: Profile;
-	categories?: object;
-	tags?: [string];
 }
 
 const BlogLayoutContext = React.createContext<BlogLayoutContextProps>({
